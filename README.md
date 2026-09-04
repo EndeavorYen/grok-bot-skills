@@ -11,6 +11,7 @@ Role types in the table use only: **Decision lead**, **Coding lead**, **Implemen
 | Skill | Role types | Use when | Upstream (if external) |
 |---|---|---|---|
 | `skills/grok-bot-multi-agent-architecture` | Designer, Decision lead | Designing, auditing, or porting a multi-bot line | — |
+| `skills/maintain-grok-bot-skills` | Designer, Ops/Secretary | Add/cull/sanitize pack skills, sync upstreams, keep README role-type table, open maintenance PRs | — |
 | `skills/archive-gate` | Ops/Secretary, Content | Building or running a librarian that archives keepers to GitHub via CloudAgent | — |
 | `skills/design-grok-bot` | Designer | Creating or auditing a bot | — |
 | `skills/show-me` | All | Explaining a live discussion point visually (pseudocode, call tree, file tree, Mermaid, diff, small HTML) | [humanlayer/skills](https://github.com/humanlayer/skills/tree/main/plugins/show-me/skills/show-me) |
@@ -55,9 +56,21 @@ Copy a skill folder into your Grok Bot workflows library (or import via your usu
 
 ## Maintenance
 
-Revisit this pack quarterly. Remove skills that duplicate another folder or went unused.
+Pack maintainer owns add / cull / sanitize / sync-upstream / role-table / open-PR.
 
-External skills (verbatim packages) note upstream URL and last-synced date in their `SKILL.md`. Last-synced for this revision: **2026-09-04**.
+Procedure: [`skills/maintain-grok-bot-skills`](skills/maintain-grok-bot-skills/SKILL.md).
+
+**sanitize fence:** no private bot names, no agent UUIDs, no machine-local absolute paths, no credentials or personal URLs. Use fill-ins (`PIPELINE_ROOT`, gate owners, `owner/repo`).
+
+**role-table:** every skill folder has one README Skills row; role types use only Decision lead / Coding lead / Implementer / Designer / Content / Ops/Secretary / All.
+
+**sync-upstream:** verbatim external packages keep upstream URL + last-synced date in their `SKILL.md` and in the list below. Revisit quarterly (~90 days) or when a pointer breaks.
+
+**open-PR:** changes land via pull request. Squash to main only when the operator has authorized CLEAN merge for this repo.
+
+Revisit this pack quarterly. Remove skills that duplicate another folder or went unused. Quiet when nothing changed.
+
+External skills (verbatim packages) — last-synced for this revision: **2026-09-04**.
 
 - `show-me` — https://github.com/humanlayer/skills/tree/main/plugins/show-me/skills/show-me
 - `writing-for-agents` — https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-for-agents
