@@ -1,0 +1,4 @@
+interface:
+  display_name: "Su Architecture First"
+  short_description: "Scale architecture reasoning to the work"
+  default_prompt: "Use $su-architecture-first to run the smallest sufficient architecture-first preflight, then continue with the authorized engineering work."

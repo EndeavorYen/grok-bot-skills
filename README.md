@@ -4,13 +4,24 @@ Reusable Grok Bot skills for multi-agent teams: chief + specialists, disk handof
 
 These skills are **generic templates**. Fill in `PIPELINE_ROOT`, gate owners, and repo names per environment. Do not commit account handles, credentials, private URLs, or personal preferences into this repository.
 
+Role types in the table use only: **Decision lead**, **Coding lead**, **Implementer**, **Designer**, **Content**, **Ops/Secretary**, **All**.
+
 ## Skills
 
-| Skill | Use when |
-|---|---|
-| `skills/grok-bot-multi-agent-architecture` | Designing, auditing, or porting a multi-bot line |
-| `skills/archive-gate` | Building/running a librarian that archives keepers to GitHub via CloudAgent |
-| `skills/design-grok-bot` | Creating a bot; includes the architecture checklist |
+| Skill | Role types | Use when | Upstream (if external) |
+|---|---|---|---|
+| `skills/grok-bot-multi-agent-architecture` | Designer, Decision lead | Designing, auditing, or porting a multi-bot line | — |
+| `skills/archive-gate` | Ops/Secretary, Content | Building or running a librarian that archives keepers to GitHub via CloudAgent | — |
+| `skills/design-grok-bot` | Designer | Creating or auditing a bot | — |
+| `skills/show-me` | All | Explaining a live discussion point visually (pseudocode, call tree, file tree, Mermaid, diff, small HTML) | [humanlayer/skills](https://github.com/humanlayer/skills/tree/main/plugins/show-me/skills/show-me) |
+| `skills/writing-for-agents` | Designer | Creating or editing skills, `AGENTS.md`, `CLAUDE.md`, or other agent-consumed docs | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-for-agents) |
+| `skills/su-architecture-first` | Decision lead, Coding lead, Implementer | Architecture-first preflight (goal, owning layer, source of truth, change class, validation) | [doublesq97-ui/su-architecture-first](https://github.com/doublesq97-ui/su-architecture-first) |
+| `skills/gentle-grill-me` | Decision lead | Vague asks → stress-test the plan, not the person; one decision card per round | [EndeavorYen/gentle-grill-me](https://github.com/EndeavorYen/gentle-grill-me) (portable adaptation) |
+| `skills/cheap-routines` | Decision lead, Ops/Secretary | Designing routine cadence: coarsest useful window, quiet when unchanged, event listeners, short-chat digests | — |
+| `skills/poteto-dispatch` | Coding lead, Implementer | One-line coding dispatch: `/poteto-mode <goal>. Same PR #<n>. Done when: <runnable proof>.` | — |
+| `skills/cloudagent-model-lock` | Coding lead, Implementer | Launching a Cursor CloudAgent with explicit `model` + `model_params` | — |
+| `skills/work-item-plan` | Decision lead | Multi-day stream: north-star, freeze, main bet, issue policy, stuck path, deadline, then STOP | — |
+| `skills/thin-bot` | All | Bot manages; heavy research/code goes to CloudAgent or local build CLI | — |
 
 ## Recommended roster (roles, not people)
 
@@ -19,7 +30,7 @@ These skills are **generic templates**. Fill in `PIPELINE_ROOT`, gate owners, an
 | Chief | Coordination | Route, board file, escalate | Specialist execution |
 | Source | Source | Collect + dedupe inputs to disk | Publishing / final artifacts |
 | Evidence | Evidence | Produce reviewable artifacts to disk | Publishing |
-| Action | Action | Draft + execute external side effects | Acting without human approval |
+| Action | Action | Draft + execute external side effects | Acting without operator approval |
 | Archive | Archive | Keeper → GitHub PR; skill drafts | `skill write` without approval |
 | Bot designer | Meta | Create/audit bots against the checklist | Running the production line |
 
@@ -41,6 +52,18 @@ Archive/librarian bots also apply `archive-gate`.
 ## Install
 
 Copy a skill folder into your Grok Bot workflows library (or import via your usual skill install path), then invoke by name. Replace fill-ins for your line.
+
+## Maintenance
+
+Revisit this pack quarterly. Remove skills that duplicate another folder or went unused.
+
+External skills (verbatim packages) note upstream URL and last-synced date in their `SKILL.md`. Last-synced for this revision: **2026-09-04**.
+
+- `show-me` — https://github.com/humanlayer/skills/tree/main/plugins/show-me/skills/show-me
+- `writing-for-agents` — https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-for-agents
+- `su-architecture-first` — https://github.com/doublesq97-ui/su-architecture-first
+
+`gentle-grill-me` is a portable adaptation of https://github.com/EndeavorYen/gentle-grill-me, not a verbatim vendor copy.
 
 ## Privacy
 
