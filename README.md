@@ -13,7 +13,7 @@ Role types in the table use only: **Decision lead**, **Coding lead**, **Implemen
 | `skills/grok-bot-multi-agent-architecture` | Designer, Decision lead | Designing, auditing, or porting a multi-bot line | — |
 | `skills/maintain-grok-bot-skills` | Designer, Ops/Secretary | Add/cull/sanitize pack skills, sync upstreams, keep README role-type table, open maintenance PRs | — |
 | `skills/archive-gate` | Ops/Secretary, Content | Building or running a librarian that archives keepers to GitHub via CloudAgent | — |
-| `skills/design-grok-bot` | Designer | Creating or auditing a bot | — |
+| `skills/design-grok-bot` | Designer | Creating or auditing a bot (incl. PM／領班: continuous chase; routines=gates) | — |
 | `skills/show-me` | All | Explaining a live discussion point visually (pseudocode, call tree, file tree, Mermaid, diff, small HTML) | [humanlayer/skills](https://github.com/humanlayer/skills/tree/main/plugins/show-me/skills/show-me) |
 | `skills/writing-for-agents` | Designer | Creating or editing skills, `AGENTS.md`, `CLAUDE.md`, or other agent-consumed docs | [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-for-agents) |
 | `skills/su-architecture-first` | Decision lead, Coding lead, Implementer | Architecture-first preflight (goal, owning layer, source of truth, change class, validation) | [doublesq97-ui/su-architecture-first](https://github.com/doublesq97-ui/su-architecture-first) |
@@ -45,7 +45,7 @@ Before and after `CreateAgent`, the designer bot must apply `design-grok-bot` an
 4. Upstream / downstream named
 5. Trust fence in the description (publish / send / spend / delete / skill write)
 6. Quiet when idle; no empty polling
-7. Routines only after a proven one-off → skill
+7. Routines only after a proven one-off → skill; for PM／領班 seats, routines are checkpoint gates (quiet when unchanged), not the primary progress loop
 8. Shared computer is not a security boundary
 
 Archive/librarian bots also apply `archive-gate`.
