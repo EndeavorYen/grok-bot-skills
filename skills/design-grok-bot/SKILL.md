@@ -1,106 +1,102 @@
 ---
 name: design-grok-bot
 description: >-
-  Use this when designing, creating, or auditing a Grok Bot. Ask preference
-  questions the environment cannot settle, write a tight persona, CreateAgent,
-  then verify the live profile. Always run grok-bot-multi-agent-architecture.
-  Coding bots: poteto-dispatch and thin-bot. Fresh pstack install: run
-  setup-pstack first.
+  Use this when designing or creating a new Grok Bot (including PM／領班 seats).
+  Ask a few preference questions, write a tight persona, CreateAgent, then
+  CJK-check the live profile and wire the team bus. PM bots chase continuously;
+  routines are gates only. Coding bots use pstack / poteto-mode.
 ---
 # Design a Grok Bot
 
-Create the bot. Ship a shareable template only when the operator asked for one.
-
-Before writing the persona, run [grok-bot-multi-agent-architecture](sand-workflow:grok-bot-multi-agent-architecture). For archive/librarian bots also run [archive-gate](sand-workflow:archive-gate). Apply [writing-for-agents](sand-workflow:writing-for-agents) to the description.
+Create the bot. Ship a shareable template only when the user asked for one.
 
 ## Data shape
 
 A bot is four fields, in this order:
 
 1. **One job.** One sentence. What it does every time it wakes.
-2. **Anti-jobs.** Adjacent work that belongs to a different bot.
-3. **Voice.** A few words. Match the operator, or a named character they chose.
-4. **Wake.** On-demand chat, a standing routine, or both. Quiet when there is nothing to report.
+2. **Anti-jobs.** Hard guardrails: what it never does, even if asked. Adjacent work goes to a different bot.
+3. **Voice.** A few words. Match the user, or a named character.
+4. **Wake.** On-demand chat, a standing routine, or both. Quiet when idle.
 
 Name is short. Description carries all four.
 
-`CreateAgent` takes `name` and `description` only. That description is the whole persona. After create, read the live profile the product stores for that agent id. Trust the stored description, not the tool ack.
+`CreateAgent` takes `name` and `description` only. That description is the whole persona.
 
-There is no delete tool. Create only when the job is real.
+## Architecture checklist
 
-## Architecture checklist (required)
+Fail the design if any item is missing:
 
-Fail the design (fix or rewrite) until every item is present:
+1. Gate / role named (chief / source / evidence / action / archive)
+2. No duplicate owner for an existing job
+3. Path-only disk bus when handing off
+4. Upstream / downstream named
+5. Trust fence in the description (publish / send / spend / delete / skill write)
+6. Quiet when idle; no empty polling
+7. Routines only after a proven one-off → skill; for PM seats, routines are gates not the chase loop
+8. Shared computer is not a security boundary
 
-1. **Gate / role** — chief, source, evidence, action, archive, or a justified other specialist.
-2. **One owner** — if this job already belongs to an existing bot, refine that bot.
-3. **Disk bus** — outputs under a `PIPELINE_ROOT` path; messages carry paths only.
-4. **Handoff** — upstream/downstream named; six-field card from grok-bot-multi-agent-architecture when crossing bots.
-5. **Trust fence** — description lists never-without-asking actions (publish, send, spend, delete, skill write, production).
-6. **Quiet** — explicit quiet-when-idle; cadence via [cheap-routines](sand-workflow:cheap-routines).
-7. **Cost** — routines only after a proven one-off → skill.
-8. **Shared computer** — bots are a labor boundary; keep secrets off the shared machine when only one role should see them.
-
-Chief bots route, delegate, and escalate. Archive bots follow archive-gate. Action bots draft first and wait for explicit operator yes before side effects.
-
-Complete when the live profile passes all eight items.
-
-## Fresh install
-
-On first run after import, or when pstack is newly installed and `~/.cursor/rules/pstack-models.mdc` is missing, run pstack's setup-pstack skill (`/setup-pstack`) before designing a coding bot. Skip if the rule already exists. Re-running setup-pstack updates the rule.
-
-Then run `/create-verification-skill` when a real repo is present and no `verify-*` skill exists. Skip create-verification-skill on an empty machine.
-
-Complete when the model rule exists (coding bots) and a verify skill exists or was skipped for a documented reason.
+Coding bots: pstack / poteto-mode bar. Fresh install: run setup-pstack when `~/.cursor/rules/pstack-models.mdc` is missing. `/create-verification-skill` only when a real repo is present and no `verify-*` skill exists.
 
 ## Intake
 
-Ask only preference questions no experiment can settle. Typical set, skip any already answered:
+Ask only preference questions no experiment can settle. Skip any already answered:
 
-- the one job / which gate
-- which line `PIPELINE_ROOT` if multi-bot
+- the one job
 - voice and name, if they care
-- standing routine vs on-demand
-- who it talks to (this operator, other bots, an outside channel)
+- standing routine vs on-demand (if PM: routine = gate only; chase is continuous)
+- who it talks to
 
-Copy tools, plugins, and model from a working sibling when one exists. After the job is clear, create it.
+Copy tools / plugins / model from a working sibling when you can. Create when the job is clear.
 
-If the ask is reversible detail (color, a nickname), pick it and say what you picked.
+Reversible detail (color, nickname): pick it and say what you picked.
+
+**Lean default.** Start with the smallest roster that can ship the near-term slice (often 領班＋動手). Expand seats only when a real knife is blocked without that role. Skip naming / seat widgets while the roster shape is still soft.
+
+## PM / 領班 bots
+
+Use when the seat owns a line's progress (Team PM, CoS, 領班), not the specialist craft.
+
+Bake into the description:
+
+1. **One job:** chase in-flight work, name knives, 對上／merge gate (or escalate), report to the operator — drive progress without asking the operator to PM.
+2. **Anti-jobs:** do not do the specialist craft (big implement PR, thesis, deck, /aal-go, …); do not wait for a clock to chase.
+3. **Continuous chase:** during development, track and re-dispatch on wake / event / handoff. Escalate only true decisions (spend, delete, ship, unresolved product choice).
+4. **Routines = checkpoint gates only** — quiet-when-unchanged catch for missed escalations; never the primary progress loop. First routine prompt must say this explicitly.
+5. **Downstream named** (動手 / copy / research) + disk bus single board writer.
+6. Coding bar still pstack / poteto-mode for knives the PM names; implementer runs CloudAgent.
+
+Do not create a PM bot whose only wake is a daily digest. That trains clock-wait.
 
 ## Coding bots
 
-Bar is pstack. Read pstack's poteto-mode (and boteto-mode on Grok Bot) when writing the persona. Dispatch shape: [poteto-dispatch](sand-workflow:poteto-dispatch). Heavy work leaves the chat: [thin-bot](sand-workflow:thin-bot). CloudAgent launches: [cloudagent-model-lock](sand-workflow:cloudagent-model-lock).
-
-Bake into the description:
-
-- one job and anti-jobs
-- unslopped, short replies
-- repo work goes to a CloudAgent (or local build CLI), not a long-chat clone
-- slash-skills are live files, not app commands, if this operator uses them
-- copy the current model rule from an existing coding bot unless the operator names one
-- point at pstack / poteto-mode as situational
-
-Keep the pstack playbook out of the description; the skill is the source of truth.
-
-If pstack is not installed, keep the same tightness and say it is missing.
+Bake into the description: one job and anti-jobs; unslopped short replies; repo work → CloudAgent (not a local clone); pstack / poteto-mode as situational. Do not paste the full pstack playbook.
 
 ## Non-coding bots
 
-Same tightness, different job. Scout, shopkeep, life-admin, dispatcher, writer, librarian.
-
-Bake into the description:
-
-- ONLY job, named in the first sentence (+ gate name when on a multi-bot line)
-- stay quiet when there is nothing to report
-- the adjacent verb belongs to another bot (a mentions scout stays off posting, a drafter stays off sending, a librarian stays off generating)
-- the concrete how (which path, which API, which inbox, which channel)
-
-Add coding instructions only when the job is hybrid and the split is explicit (coordinate vs write code).
+Bake into the description: ONLY job first; quiet when idle; never the adjacent verb; the concrete how.
 
 ## After create
 
-Read the live profile back. Tell the operator the name, the one-job line, and which gate it fills. Deletion is from the sidebar (right-click, Delete).
+### CJK-check (completion criterion)
 
-Re-check the architecture checklist against the live description. If it fails, UpdateAgent before handing off.
+1. Read `the agent profile.json on disk (agents/<id>/)`.
+2. Done when `name` and every required CJK token in `description` match the intended strings exactly (no near-homophone swaps from CreateAgent / UpdateAgent).
+3. Mismatch → `UpdateAgent` with the disk-proven strings, then re-read until match.
+4. Announce to the user only after CJK-check passes. Ack alone is not proof.
 
-If a first routine belongs to the job, create it on that bot by sending it the instruction, or say you cannot write another bot's routines from here and do that setup in its chat. Routine cadence follows cheap-routines.
+### Wire the line (same turn)
+
+For a team line, set the bus yourself. Do this without waiting on the chief bot unless the operator says to.
+
+1. Ensure `PIPELINE_ROOT` (e.g. `$PIPELINE_ROOT` or `PIPELINE_ROOT=/…/teamN/`).
+2. Write or refresh `handoff.md` (live ids, anti-jobs, who merges).
+3. Write `board.md` — single writer named; gate table; path-only; quiet when idle.
+4. Create `handoffs/` (six-field cards) plus stage folders as needed (`briefs/`, `keepers/`).
+5. Bake bus + upstream/downstream into each new bot's description; prove with a disk read.
+6. First routine: SendToAgent that bot the concrete `update_state` create instruction.
+7. Sibling personas: change only the live-id sentence.
+
+Apply [grok-bot-multi-agent-architecture](sand-workflow:grok-bot-multi-agent-architecture). Cap roster growth; add a fifth bot only when the user asks.
+
+Tell the user the name and one-job line. They delete from the sidebar (right-click → Delete) if they hate it.
