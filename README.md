@@ -23,6 +23,13 @@ Role types in the table use only: **Decision lead**, **Coding lead**, **Implemen
 | `skills/cloudagent-model-lock` | Coding lead, Implementer | Launching a Cursor CloudAgent with explicit `model` + `model_params` | — |
 | `skills/work-item-plan` | Decision lead | Multi-day stream: north-star, freeze, main bet, issue policy, stuck path, deadline, then STOP | — |
 | `skills/thin-bot` | All | Bot manages; heavy research/code goes to CloudAgent or local build CLI | — |
+| `skills/gate-no-leftovers` | Decision lead, Coding lead | Merge/pass gate: finish in-scope holes or name a blocker; no P2/"later" close | — |
+| `skills/verifiable-delivery` | Decision lead, Coding lead, Implementer | Spec → contract → verify → adversarial delivery loop with a living map | — |
+| `skills/living-design-map` | Designer, Decision lead | Reconcile living design docs vs shipped work; plain-language ranked next | — |
+| `skills/grok-bot-clone-cutover` | Ops/Secretary, Decision lead | Fat thread → blank new bot cutover (not Duplicate); handoff first | — |
+| `skills/routine-healthcheck` | Ops/Secretary, Decision lead | Audit fleet routines for token waste; apply-as-a-set after accept | — |
+| `skills/transcript-healthcheck` | Ops/Secretary, Decision lead | Mine transcripts for friction; propose skill/bot/routine; high-evidence do now | — |
+| `skills/grok-heavy-review` | Decision lead, Implementer | Post-open Heavy review packet (agree/oppose/WATCH); no advice layer | — |
 
 ## Recommended roster (roles, not people)
 
